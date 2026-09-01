@@ -7,3 +7,5 @@ public class CriarGeladeira {
         System.out.println("criado");
     }
 }
+
+asçdlfkj
