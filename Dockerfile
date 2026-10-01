@@ -1,17 +1,17 @@
-# Estágio 1: Build (Maven com JDK 21)
-FROM maven:3.9.6-eclipse-temurin-21 AS build
+FROM maven:3.9-eclipse-temurin-21 AS build
+
+COPY src /app/src
+COPY pom.xml /app
+
 WORKDIR /app
 
-COPY pom.xml /app/
-COPY src /app/src/
+RUN mvn clean install
 
-RUN mvn clean install -DskipTests
-
-# Estágio 2: Runtime (JRE leve do Java 21)
 FROM eclipse-temurin:21-jre-alpine
-WORKDIR /app
 
-COPY --from=build /app/target/*.jar /app/app.jar
+COPY --from=build /app/target/praticaProva-1.0-SNAPSHOT.jar /app/app.jar
+
+WORKDIR /app
 
 EXPOSE 8080
 
